@@ -120,30 +120,30 @@ export function two() {
   });
 }
 
-// export function parseTwitterResp() {
-//   const bodyString = Host.inputString();
-//   const params = JSON.parse(bodyString);
+export function parseTwitterResp() {
+  const bodyString = Host.inputString();
+  const params = JSON.parse(bodyString);
 
-//   if (params.data && params.data.user && params.data.user.result) {
-//     const userResult = params.data.user.result;
+  if (params.data && params.data.user && params.data.user.result) {
+    const userResult = params.data.user.result;
 
-//     const followedBy = userResult.legacy.followed_by !== undefined ? userResult.legacy.followed_by : null;
-//     const following = userResult.legacy.following !== undefined ? userResult.legacy.following : null;
+    const followedBy = userResult.legacy.followed_by !== undefined ? userResult.legacy.followed_by : null;
+    const following = userResult.legacy.following !== undefined ? userResult.legacy.following : null;
 
-//     const revealed = `"followed_by":${followedBy},"following":${following}`;
-//     const selectionStart = bodyString.indexOf(revealed);
-//     const selectionEnd = selectionStart + revealed.length;
+    const revealed = `"followed_by":${followedBy},"following":${following}`;
+    const selectionStart = bodyString.indexOf(revealed);
+    const selectionEnd = selectionStart + revealed.length;
 
-//     const secretResps = [
-//       bodyString.substring(0, selectionStart),
-//       bodyString.substring(selectionEnd, bodyString.length),
-//     ];
+    const secretResps = [
+      bodyString.substring(0, selectionStart),
+      bodyString.substring(selectionEnd, bodyString.length),
+    ];
 
-//     outputJSON(secretResps);
-//   } else {
-//     outputJSON(false);
-//   }
-// }
+    outputJSON(secretResps);
+  } else {
+    outputJSON(false);
+  }
+}
 
 
 export function three() {
