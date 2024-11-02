@@ -234,7 +234,6 @@ function three() {
       ...params
       // getSecretResponse: 'parseTwitterResp',
     });
-    (0, import_hf.outputJSON)(id);
     if (params.data && params.data.user && params.data.user.result) {
       const userResult = params.data.user.result;
       const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;

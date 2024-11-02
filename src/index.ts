@@ -156,7 +156,7 @@ export function three() {
       ...params,
       // getSecretResponse: 'parseTwitterResp',
     });
-    outputJSON(id);
+    // outputJSON(id);
 
     if (params.data && params.data.user && params.data.user.result) {
       const userResult = params.data.user.result;
