@@ -75,6 +75,7 @@ var require_hf = __commonJS({
 var src_exports = {};
 __export(src_exports, {
   config: () => config,
+  parseTwitterResp: () => parseTwitterResp,
   start: () => start,
   three: () => three,
   two: () => two
@@ -204,6 +205,25 @@ function two() {
       `authorization: ${headers.authorization}`
     ]
   });
+}
+function parseTwitterResp() {
+  const bodyString = Host.inputString();
+  const params = JSON.parse(bodyString);
+  if (params.data && params.data.user && params.data.user.result) {
+    const userResult = params.data.user.result;
+    const followedBy = userResult.legacy.followed_by !== void 0 ? userResult.legacy.followed_by : null;
+    const following = userResult.legacy.following !== void 0 ? userResult.legacy.following : null;
+    const revealed = `"followed_by":${followedBy},"following":${following}`;
+    const selectionStart = bodyString.indexOf(revealed);
+    const selectionEnd = selectionStart + revealed.length;
+    const secretResps = [
+      bodyString.substring(0, selectionStart),
+      bodyString.substring(selectionEnd, bodyString.length)
+    ];
+    (0, import_hf.outputJSON)(secretResps);
+  } else {
+    (0, import_hf.outputJSON)(false);
+  }
 }
 function three() {
   const params = JSON.parse(Host.inputString());
