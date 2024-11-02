@@ -1,0 +1,33 @@
+{
+    "title": "X Following Check",
+    "description": "X Following Check",
+    "steps": [
+        {
+            "title": "Visit X website",
+            "cta": "Go to x.com",
+            "action": "start"
+        },
+        {
+            "title": "Collect credentials",
+            "description": "Login to your account if you haven't already",
+            "cta": "Check cookies",
+            "action": "two"
+        },
+        {
+            "title": "Notarize twitter profile",
+            "cta": "Notarize",
+            "action": "three",
+            "prover": true
+        }
+    ],
+    "hostFunctions": [
+        "redirect",
+        "notarize"
+    ],
+    "cookies": [
+        "x.com"
+    ],
+    "headers": [
+        "x.com"
+    ]
+}
