@@ -1,6 +1,6 @@
 import icon from '../assets/icon.png';
 import config_json from '../config.json';
-import { getCookiesByHost, getHeadersByHost, notarize, outputJSON, redirect } from './utils/hf.js';
+import { getCookiesByHost, getHeadersByHost, outputJSON, redirect } from './utils/hf.js';
 
 
 const requestUrl = 'https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName';
@@ -148,8 +148,9 @@ export function parseTwitterResp() {
 
 export function three() {
   const params = JSON.parse(Host.inputString());
+  outputJSON(false);
 
-  if (!params) {
+  /*if (!params) {
     outputJSON(false);
   } else {
     const id = notarize({
@@ -157,5 +158,5 @@ export function three() {
       getSecretResponse: 'parseTwitterResp',
     });
     outputJSON(id);
-  }
+  }*/
 }

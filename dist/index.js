@@ -37,10 +37,10 @@ var require_hf = __commonJS({
       const mem = Memory.fromString(url);
       redirect3(mem.offset);
     }
-    function notarize2(options) {
-      const { notarize: notarize3 } = Host.getFunctions();
+    function notarize(options) {
+      const { notarize: notarize2 } = Host.getFunctions();
       const mem = Memory.fromString(JSON.stringify(options));
-      const idOffset = notarize3(mem.offset);
+      const idOffset = notarize2(mem.offset);
       const id = Memory.find(idOffset).readString();
       return id;
     }
@@ -63,7 +63,7 @@ var require_hf = __commonJS({
     }
     module2.exports = {
       redirect: redirect2,
-      notarize: notarize2,
+      notarize,
       outputJSON: outputJSON2,
       getCookiesByHost: getCookiesByHost2,
       getHeadersByHost: getHeadersByHost2
@@ -227,14 +227,6 @@ function parseTwitterResp() {
 }
 function three() {
   const params = JSON.parse(Host.inputString());
-  if (!params) {
-    (0, import_hf.outputJSON)(false);
-  } else {
-    const id = (0, import_hf.notarize)({
-      ...params,
-      getSecretResponse: "parseTwitterResp"
-    });
-    (0, import_hf.outputJSON)(id);
-  }
+  (0, import_hf.outputJSON)(false);
 }
 //# sourceMappingURL=index.js.map
