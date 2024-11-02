@@ -37,10 +37,10 @@ var require_hf = __commonJS({
       const mem = Memory.fromString(url);
       redirect3(mem.offset);
     }
-    function notarize(options) {
-      const { notarize: notarize2 } = Host.getFunctions();
+    function notarize2(options) {
+      const { notarize: notarize3 } = Host.getFunctions();
       const mem = Memory.fromString(JSON.stringify(options));
-      const idOffset = notarize2(mem.offset);
+      const idOffset = notarize3(mem.offset);
       const id = Memory.find(idOffset).readString();
       return id;
     }
@@ -63,7 +63,7 @@ var require_hf = __commonJS({
     }
     module2.exports = {
       redirect: redirect2,
-      notarize,
+      notarize: notarize2,
       outputJSON: outputJSON2,
       getCookiesByHost: getCookiesByHost2,
       getHeadersByHost: getHeadersByHost2
@@ -227,6 +227,24 @@ function parseTwitterResp() {
 }
 function three() {
   const params = JSON.parse(Host.inputString());
-  (0, import_hf.outputJSON)(false);
+  if (!params) {
+    (0, import_hf.outputJSON)(false);
+  } else {
+    const id = (0, import_hf.notarize)({
+      ...params
+      // getSecretResponse: 'parseTwitterResp',
+    });
+    (0, import_hf.outputJSON)(id);
+    if (params.data && params.data.user && params.data.user.result) {
+      const userResult = params.data.user.result;
+      const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;
+      const following = userResult.legacy.following !== null ? userResult.legacy.following : null;
+      if (followedBy && following) {
+        (0, import_hf.outputJSON)(id);
+      } else {
+        (0, import_hf.outputJSON)({ "following_check": "no" });
+      }
+    }
+  }
 }
 //# sourceMappingURL=index.js.map

@@ -1,6 +1,6 @@
 import icon from '../assets/icon.png';
 import config_json from '../config.json';
-import { getCookiesByHost, getHeadersByHost, outputJSON, redirect } from './utils/hf.js';
+import { getCookiesByHost, getHeadersByHost, notarize, outputJSON, redirect } from './utils/hf.js';
 
 
 const requestUrl = 'https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName';
@@ -148,15 +148,27 @@ export function parseTwitterResp() {
 
 export function three() {
   const params = JSON.parse(Host.inputString());
-  outputJSON(false);
 
-  /*if (!params) {
+  if (!params) {
     outputJSON(false);
   } else {
     const id = notarize({
       ...params,
-      getSecretResponse: 'parseTwitterResp',
+      // getSecretResponse: 'parseTwitterResp',
     });
     outputJSON(id);
-  }*/
+
+    if (params.data && params.data.user && params.data.user.result) {
+      const userResult = params.data.user.result;
+
+      const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;
+      const following = userResult.legacy.following !== null ? userResult.legacy.following : null;
+
+      if ((followedBy && following)) {
+        outputJSON(id);
+      } else {
+        outputJSON({"following_check": 'no'});
+      }
+    }
+  }
 }
