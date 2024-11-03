@@ -13,7 +13,7 @@ const createFullRequestUrl = () => {
   //   screen_name: screenName
   // };
   const variables = {
-    screen_name: "4_xeta"
+    screen_name: "0xdarron"
   };
 
   const features = {
@@ -76,7 +76,7 @@ function isValidHost(urlString: string) {
 
 export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
-    redirect('https://x.com/4_xeta');
+    redirect('https://x.com/0xdarron');
     // redirect(Config.get('tabUrl'))
     outputJSON(false);
     return;
@@ -157,21 +157,5 @@ export function three() {
       // getSecretResponse: 'parseTwitterResp',
     });
     outputJSON(id);
-
-    /*if (params.data && params.data.user && params.data.user.result) {
-      const userResult = params.data.user.result;
-
-      const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;
-      const following = userResult.legacy.following !== null ? userResult.legacy.following : null;
-
-      if ((true && true)) {
-        outputJSON({"1": "1"});
-        outputJSON(id);
-      } else {
-        outputJSON({"0": "0"});
-        outputJSON({"following_check": 'no'});
-      }
-    }
-    outputJSON({"following_check": 'no'});*/
   }
 }
