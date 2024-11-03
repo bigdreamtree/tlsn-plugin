@@ -125,7 +125,7 @@ var import_hf = __toESM(require_hf());
 var requestUrl = "https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName";
 var createFullRequestUrl = () => {
   const variables = {
-    screen_name: "0xdarron"
+    screen_name: "0xboosik"
   };
   const features = {
     hidden_profile_subscriptions_enabled: true,
@@ -172,7 +172,7 @@ function isValidHost(urlString) {
 }
 function start() {
   if (!isValidHost(Config.get("tabUrl"))) {
-    (0, import_hf.redirect)("https://x.com/0xdarron");
+    (0, import_hf.redirect)("https://x.com/0xboosik");
     (0, import_hf.outputJSON)(false);
     return;
   }
