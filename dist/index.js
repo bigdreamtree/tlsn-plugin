@@ -234,15 +234,7 @@ function three() {
       ...params
       // getSecretResponse: 'parseTwitterResp',
     });
-    if (params.data && params.data.user && params.data.user.result) {
-      const userResult = params.data.user.result;
-      if (true) {
-        (0, import_hf.outputJSON)({ "1": "1" });
-      } else {
-        (0, import_hf.outputJSON)({ "0": "0" });
-      }
-    }
-    (0, import_hf.outputJSON)({ "following_check": "no" });
+    (0, import_hf.outputJSON)(id);
   }
 }
 //# sourceMappingURL=index.js.map

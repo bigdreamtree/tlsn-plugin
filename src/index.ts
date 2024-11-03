@@ -156,21 +156,22 @@ export function three() {
       ...params,
       // getSecretResponse: 'parseTwitterResp',
     });
+    outputJSON(id);
 
-    if (params.data && params.data.user && params.data.user.result) {
+    /*if (params.data && params.data.user && params.data.user.result) {
       const userResult = params.data.user.result;
 
-      // const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;
-      // const following = userResult.legacy.following !== null ? userResult.legacy.following : null;
+      const followedBy = userResult.legacy.followed_by !== null ? userResult.legacy.followed_by : null;
+      const following = userResult.legacy.following !== null ? userResult.legacy.following : null;
 
       if ((true && true)) {
         outputJSON({"1": "1"});
-        // outputJSON(id);
+        outputJSON(id);
       } else {
         outputJSON({"0": "0"});
-        // outputJSON({"following_check": 'no'});
+        outputJSON({"following_check": 'no'});
       }
     }
-    outputJSON({"following_check": 'no'});
+    outputJSON({"following_check": 'no'});*/
   }
 }
