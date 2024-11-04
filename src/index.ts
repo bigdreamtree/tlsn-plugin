@@ -5,17 +5,7 @@ import { getCookiesByHost, getHeadersByHost, notarize, outputJSON, redirect } fr
 
 const requestUrl = 'https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName';
 
-const createFullRequestUrl = () => {
-  // const tabUrl = Config.get('tabUrl');
-  // const screenName = tabUrl ? new URL(tabUrl).pathname.split('/').pop() || '' : '';
-
-  // const variables = {
-  //   screen_name: screenName
-  // };
-  const variables = {
-    screen_name: "4_xeta"
-  };
-
+const createFullRequestUrl = (screen_name) => {
   const features = {
     hidden_profile_subscriptions_enabled: true,
     rweb_tipjar_consumption_enabled: true,
@@ -42,13 +32,11 @@ const createFullRequestUrl = () => {
   };
 
   return `${requestUrl}?${encodeQueryData({
-    variables: JSON.stringify(variables),
+    variables: JSON.stringify({screen_name}),
     features: JSON.stringify(features),
     fieldToggles: JSON.stringify(fieldToggles)
   })}`;
 }
-
-const fullRequestUrl = createFullRequestUrl();
 
 export function config() {
   outputJSON({
@@ -56,7 +44,7 @@ export function config() {
     icon: icon,
     requests: [
       {
-        url: fullRequestUrl,
+        url: "https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName*",
         method: 'GET',
       },
     ],
@@ -68,16 +56,11 @@ function isValidHost(urlString: string) {
   return url.hostname === 'twitter.com' || url.hostname === 'x.com';
 }
 
-// function getPath(urlString: string) {
-//   const url = new URL(urlString);
-  
-//   return url.pathname;
-// }
-
 export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
-    redirect('https://x.com/4_xeta');
-    // redirect(Config.get('tabUrl'))
+    const tabUrl = Config.get('tabUrl');
+    const screenName = new URL(tabUrl).pathname.split('/')[2];
+    redirect(`https://x.com/${screenName}`);
     outputJSON(false);
     return;
   }
@@ -87,7 +70,10 @@ export function start() {
 export function two() {
   const cookies = getCookiesByHost('x.com');
   const headers = getHeadersByHost('x.com');
-  
+  const tabUrl = Config.get('tabUrl');
+  const screenName = tabUrl ? new URL(tabUrl).pathname.split('/').pop() || '' : '';
+  const fullRequestUrl = createFullRequestUrl(screenName);
+
   if (
     !cookies.auth_token ||
     !cookies.ct0 ||
@@ -154,7 +140,7 @@ export function three() {
   } else {
     const id = notarize({
       ...params,
-      // getSecretResponse: 'parseTwitterResp',
+      getSecretResponse: 'parseTwitterResp',
     });
     outputJSON(id);
   }

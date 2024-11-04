@@ -123,10 +123,7 @@ var config_default = {
 // src/index.ts
 var import_hf = __toESM(require_hf());
 var requestUrl = "https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName";
-var createFullRequestUrl = () => {
-  const variables = {
-    screen_name: "4_xeta"
-  };
+var createFullRequestUrl = (screen_name) => {
   const features = {
     hidden_profile_subscriptions_enabled: true,
     rweb_tipjar_consumption_enabled: true,
@@ -148,19 +145,18 @@ var createFullRequestUrl = () => {
     return Object.keys(data).map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`).join("&");
   };
   return `${requestUrl}?${encodeQueryData({
-    variables: JSON.stringify(variables),
+    variables: JSON.stringify({ screen_name }),
     features: JSON.stringify(features),
     fieldToggles: JSON.stringify(fieldToggles)
   })}`;
 };
-var fullRequestUrl = createFullRequestUrl();
 function config() {
   (0, import_hf.outputJSON)({
     ...config_default,
     icon: full_tree_default,
     requests: [
       {
-        url: fullRequestUrl,
+        url: "https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName*",
         method: "GET"
       }
     ]
@@ -172,7 +168,9 @@ function isValidHost(urlString) {
 }
 function start() {
   if (!isValidHost(Config.get("tabUrl"))) {
-    (0, import_hf.redirect)("https://x.com/4_xeta");
+    const tabUrl = Config.get("tabUrl");
+    const screenName = new URL(tabUrl).pathname.split("/")[2];
+    (0, import_hf.redirect)(`https://x.com/${screenName}`);
     (0, import_hf.outputJSON)(false);
     return;
   }
@@ -181,6 +179,9 @@ function start() {
 function two() {
   const cookies = (0, import_hf.getCookiesByHost)("x.com");
   const headers = (0, import_hf.getHeadersByHost)("x.com");
+  const tabUrl = Config.get("tabUrl");
+  const screenName = tabUrl ? new URL(tabUrl).pathname.split("/").pop() || "" : "";
+  const fullRequestUrl = createFullRequestUrl(screenName);
   if (!cookies.auth_token || !cookies.ct0 || !headers["x-csrf-token"] || !headers["authorization"]) {
     (0, import_hf.outputJSON)(false);
     return;
@@ -231,8 +232,8 @@ function three() {
     (0, import_hf.outputJSON)(false);
   } else {
     const id = (0, import_hf.notarize)({
-      ...params
-      // getSecretResponse: 'parseTwitterResp',
+      ...params,
+      getSecretResponse: "parseTwitterResp"
     });
     (0, import_hf.outputJSON)(id);
   }
