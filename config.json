@@ -4,7 +4,7 @@
     "steps": [
         {
             "title": "Visit X website",
-            "cta": "Go to x.com",
+            "cta": "Go to X.com",
             "action": "start"
         },
         {
@@ -14,7 +14,7 @@
             "action": "two"
         },
         {
-            "title": "Notarize twitter profile",
+            "title": "Notarize X's following status",
             "cta": "Notarize",
             "action": "three",
             "prover": true

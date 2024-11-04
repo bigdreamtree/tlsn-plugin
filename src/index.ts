@@ -13,7 +13,7 @@ const createFullRequestUrl = () => {
   //   screen_name: screenName
   // };
   const variables = {
-    screen_name: "0xboosik"
+    screen_name: "0xdarron"
   };
 
   const features = {
@@ -76,7 +76,7 @@ function isValidHost(urlString: string) {
 
 export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
-    redirect('https://x.com/0xboosik');
+    redirect('https://x.com/0xdarron');
     // redirect(Config.get('tabUrl'))
     outputJSON(false);
     return;
