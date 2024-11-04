@@ -127,9 +127,15 @@ export function parseTwitterResp() {
     const selectionStart = bodyString.indexOf(revealed);
     const selectionEnd = selectionStart + revealed.length;
 
+    const screenName = params.data.user.result.legacy.screen_name;
+    const revealed2 = `"screen_name":"${screenName}"`;
+    const selectionStart2 = bodyString.indexOf(revealed2);
+    const selectionEnd2 = selectionStart2 + revealed2.length;
+
     const secretResps = [
       bodyString.substring(0, selectionStart),
-      bodyString.substring(selectionEnd, bodyString.length),
+      bodyString.substring(selectionEnd, selectionStart2),
+      bodyString.substring(selectionEnd2, bodyString.length),
     ];
 
     outputJSON(secretResps);
