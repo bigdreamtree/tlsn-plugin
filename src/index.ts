@@ -56,10 +56,15 @@ function isValidHost(urlString: string) {
   return url.hostname === 'twitter.com' || url.hostname === 'x.com';
 }
 
-export function start() {
+function getScreenName() {
   const cookies1 = getCookiesByHost('christmasmerkletree.xyz');
   const cookies2 = getCookiesByHost('merkle.ddns.net');
-  const screenName = cookies1.target_handle || cookies2.target_handle;
+  const cookies3 = getCookiesByHost('localhost');
+  return cookies1.target_handle || cookies2.target_handle || cookies3.target_handle;
+}
+
+export function start() {
+  const screenName = getScreenName();
 
   if (!isValidHost(Config.get('tabUrl'))) {
     redirect(`https://x.com/${screenName}`);
@@ -73,9 +78,7 @@ export function two() {
   const cookies = getCookiesByHost('x.com');
   const headers = getHeadersByHost('x.com');
 
-  const cookies1 = getCookiesByHost('christmasmerkletree.xyz');
-  const cookies2 = getCookiesByHost('merkle.ddns.net');
-  const screenName = cookies1.target_handle || cookies2.target_handle;
+  const screenName = getScreenName();
   const fullRequestUrl = createFullRequestUrl(screenName);
 
   if (

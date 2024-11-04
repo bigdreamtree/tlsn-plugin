@@ -169,10 +169,14 @@ function isValidHost(urlString) {
   const url = new URL(urlString);
   return url.hostname === "twitter.com" || url.hostname === "x.com";
 }
-function start() {
+function getScreenName() {
   const cookies1 = (0, import_hf.getCookiesByHost)("christmasmerkletree.xyz");
   const cookies2 = (0, import_hf.getCookiesByHost)("merkle.ddns.net");
-  const screenName = cookies1.target_handle || cookies2.target_handle;
+  const cookies3 = (0, import_hf.getCookiesByHost)("localhost");
+  return cookies1.target_handle || cookies2.target_handle || cookies3.target_handle;
+}
+function start() {
+  const screenName = getScreenName();
   if (!isValidHost(Config.get("tabUrl"))) {
     (0, import_hf.redirect)(`https://x.com/${screenName}`);
     (0, import_hf.outputJSON)(false);
@@ -183,9 +187,7 @@ function start() {
 function two() {
   const cookies = (0, import_hf.getCookiesByHost)("x.com");
   const headers = (0, import_hf.getHeadersByHost)("x.com");
-  const cookies1 = (0, import_hf.getCookiesByHost)("christmasmerkletree.xyz");
-  const cookies2 = (0, import_hf.getCookiesByHost)("merkle.ddns.net");
-  const screenName = cookies1.target_handle || cookies2.target_handle;
+  const screenName = getScreenName();
   const fullRequestUrl = createFullRequestUrl(screenName);
   if (!cookies.auth_token || !cookies.ct0 || !headers["x-csrf-token"] || !headers["authorization"]) {
     (0, import_hf.outputJSON)(false);
