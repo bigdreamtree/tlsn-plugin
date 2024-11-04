@@ -115,7 +115,8 @@ var config_default = {
   cookies: [
     "x.com",
     "christmasmerkletree.xyz",
-    "merkle.ddns.net"
+    "merkle.ddns.net",
+    "localhost"
   ],
   headers: [
     "x.com"
