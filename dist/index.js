@@ -169,7 +169,7 @@ function isValidHost(urlString) {
 function start() {
   if (!isValidHost(Config.get("tabUrl"))) {
     const tabUrl = Config.get("tabUrl");
-    const screenName = new URL(tabUrl).pathname.split("/")[2];
+    const screenName = new URL(tabUrl).pathname.split("/").pop();
     (0, import_hf.redirect)(`https://x.com/${screenName}`);
     (0, import_hf.outputJSON)(false);
     return;

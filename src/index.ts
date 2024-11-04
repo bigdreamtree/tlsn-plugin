@@ -59,7 +59,7 @@ function isValidHost(urlString: string) {
 export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
     const tabUrl = Config.get('tabUrl');
-    const screenName = new URL(tabUrl).pathname.split('/')[2];
+    const screenName = new URL(tabUrl).pathname.split('/').pop();
     redirect(`https://x.com/${screenName}`);
     outputJSON(false);
     return;
