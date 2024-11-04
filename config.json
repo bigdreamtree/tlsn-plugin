@@ -25,7 +25,9 @@
         "notarize"
     ],
     "cookies": [
-        "x.com"
+        "x.com",
+        "christmasmerkletree.xyz",
+        "merkle.ddns.net"
     ],
     "headers": [
         "x.com"

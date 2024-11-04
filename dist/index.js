@@ -32,10 +32,10 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/utils/hf.js
 var require_hf = __commonJS({
   "src/utils/hf.js"(exports, module2) {
-    function redirect(url) {
-      const { redirect: redirect2 } = Host.getFunctions();
+    function redirect2(url) {
+      const { redirect: redirect3 } = Host.getFunctions();
       const mem = Memory.fromString(url);
-      redirect2(mem.offset);
+      redirect3(mem.offset);
     }
     function notarize2(options) {
       const { notarize: notarize3 } = Host.getFunctions();
@@ -62,7 +62,7 @@ var require_hf = __commonJS({
       return headers[hostname];
     }
     module2.exports = {
-      redirect,
+      redirect: redirect2,
       notarize: notarize2,
       outputJSON: outputJSON2,
       getCookiesByHost: getCookiesByHost2,
@@ -113,7 +113,9 @@ var config_default = {
     "notarize"
   ],
   cookies: [
-    "x.com"
+    "x.com",
+    "christmasmerkletree.xyz",
+    "merkle.ddns.net"
   ],
   headers: [
     "x.com"
@@ -167,9 +169,11 @@ function isValidHost(urlString) {
   return url.hostname === "twitter.com" || url.hostname === "x.com";
 }
 function start() {
+  const cookies1 = (0, import_hf.getCookiesByHost)("christmasmerkletree.xyz");
+  const cookies2 = (0, import_hf.getCookiesByHost)("merkle.ddns.net");
+  const screenName = cookies1.target_handle || cookies2.target_handle;
   if (!isValidHost(Config.get("tabUrl"))) {
-    const tabUrl = Config.get("tabUrl");
-    const screenName = new URL(tabUrl).pathname.split("/").pop();
+    (0, import_hf.redirect)(`https://x.com/${screenName}`);
     (0, import_hf.outputJSON)(false);
     return;
   }
@@ -178,8 +182,9 @@ function start() {
 function two() {
   const cookies = (0, import_hf.getCookiesByHost)("x.com");
   const headers = (0, import_hf.getHeadersByHost)("x.com");
-  const tabUrl = Config.get("tabUrl");
-  const screenName = tabUrl ? new URL(tabUrl).pathname.split("/").pop() || "" : "";
+  const cookies1 = (0, import_hf.getCookiesByHost)("christmasmerkletree.xyz");
+  const cookies2 = (0, import_hf.getCookiesByHost)("merkle.ddns.net");
+  const screenName = cookies1.target_handle || cookies2.target_handle;
   const fullRequestUrl = createFullRequestUrl(screenName);
   if (!cookies.auth_token || !cookies.ct0 || !headers["x-csrf-token"] || !headers["authorization"]) {
     (0, import_hf.outputJSON)(false);

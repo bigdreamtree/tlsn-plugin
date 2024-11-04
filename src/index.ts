@@ -1,6 +1,6 @@
 import icon from '../assets/full_tree.png';
 import config_json from '../config.json';
-import { getCookiesByHost, getHeadersByHost, notarize, outputJSON } from './utils/hf.js';
+import { redirect, getCookiesByHost, getHeadersByHost, notarize, outputJSON } from './utils/hf.js';
 
 
 const requestUrl = 'https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName';
@@ -57,10 +57,12 @@ function isValidHost(urlString: string) {
 }
 
 export function start() {
+  const cookies1 = getCookiesByHost('christmasmerkletree.xyz');
+  const cookies2 = getCookiesByHost('merkle.ddns.net');
+  const screenName = cookies1.target_handle || cookies2.target_handle;
+
   if (!isValidHost(Config.get('tabUrl'))) {
-    const tabUrl = Config.get('tabUrl');
-    const screenName = new URL(tabUrl).pathname.split('/').pop();
-    // redirect(`https://x.com/${screenName}`);
+    redirect(`https://x.com/${screenName}`);
     outputJSON(false);
     return;
   }
@@ -70,8 +72,10 @@ export function start() {
 export function two() {
   const cookies = getCookiesByHost('x.com');
   const headers = getHeadersByHost('x.com');
-  const tabUrl = Config.get('tabUrl');
-  const screenName = tabUrl ? new URL(tabUrl).pathname.split('/').pop() || '' : '';
+
+  const cookies1 = getCookiesByHost('christmasmerkletree.xyz');
+  const cookies2 = getCookiesByHost('merkle.ddns.net');
+  const screenName = cookies1.target_handle || cookies2.target_handle;
   const fullRequestUrl = createFullRequestUrl(screenName);
 
   if (
