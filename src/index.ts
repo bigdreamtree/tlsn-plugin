@@ -1,6 +1,6 @@
 import icon from '../assets/full_tree.png';
 import config_json from '../config.json';
-import { getCookiesByHost, getHeadersByHost, notarize, outputJSON, redirect } from './utils/hf.js';
+import { getCookiesByHost, getHeadersByHost, notarize, outputJSON } from './utils/hf.js';
 
 
 const requestUrl = 'https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName';
@@ -60,7 +60,7 @@ export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
     const tabUrl = Config.get('tabUrl');
     const screenName = new URL(tabUrl).pathname.split('/').pop();
-    redirect(`https://x.com/${screenName}`);
+    // redirect(`https://x.com/${screenName}`);
     outputJSON(false);
     return;
   }

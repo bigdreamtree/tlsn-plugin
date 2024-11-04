@@ -32,10 +32,10 @@ var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: tru
 // src/utils/hf.js
 var require_hf = __commonJS({
   "src/utils/hf.js"(exports, module2) {
-    function redirect2(url) {
-      const { redirect: redirect3 } = Host.getFunctions();
+    function redirect(url) {
+      const { redirect: redirect2 } = Host.getFunctions();
       const mem = Memory.fromString(url);
-      redirect3(mem.offset);
+      redirect2(mem.offset);
     }
     function notarize2(options) {
       const { notarize: notarize3 } = Host.getFunctions();
@@ -62,7 +62,7 @@ var require_hf = __commonJS({
       return headers[hostname];
     }
     module2.exports = {
-      redirect: redirect2,
+      redirect,
       notarize: notarize2,
       outputJSON: outputJSON2,
       getCookiesByHost: getCookiesByHost2,
@@ -170,7 +170,6 @@ function start() {
   if (!isValidHost(Config.get("tabUrl"))) {
     const tabUrl = Config.get("tabUrl");
     const screenName = new URL(tabUrl).pathname.split("/").pop();
-    (0, import_hf.redirect)(`https://x.com/${screenName}`);
     (0, import_hf.outputJSON)(false);
     return;
   }
