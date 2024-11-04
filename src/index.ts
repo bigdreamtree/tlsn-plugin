@@ -1,4 +1,4 @@
-import icon from '../assets/icon.png';
+import icon from '../assets/full_tree.png';
 import config_json from '../config.json';
 import { getCookiesByHost, getHeadersByHost, notarize, outputJSON, redirect } from './utils/hf.js';
 
