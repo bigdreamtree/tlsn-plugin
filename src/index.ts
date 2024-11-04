@@ -13,7 +13,7 @@ const createFullRequestUrl = () => {
   //   screen_name: screenName
   // };
   const variables = {
-    screen_name: "0xboosik"
+    screen_name: "0xdarron"
   };
 
   const features = {
@@ -76,7 +76,7 @@ function isValidHost(urlString: string) {
 
 export function start() {
   if (!isValidHost(Config.get('tabUrl'))) {
-    redirect('https://x.com/0xboosik');
+    redirect('https://x.com/0xdarron');
     // redirect(Config.get('tabUrl'))
     outputJSON(false);
     return;
@@ -124,6 +124,8 @@ export function parseTwitterResp() {
   const bodyString = Host.inputString();
   const params = JSON.parse(bodyString);
 
+  console.log(params);
+
   if (params.data && params.data.user && params.data.user.result) {
     const userResult = params.data.user.result;
 
@@ -134,10 +136,20 @@ export function parseTwitterResp() {
     const selectionStart = bodyString.indexOf(revealed);
     const selectionEnd = selectionStart + revealed.length;
 
+    const screenName = params.data.user.result.legacy.screen_name;
+    const revealed2 = `"screen_name":"${screenName}"`;
+    const selectionStart2 = bodyString.indexOf(revealed2);
+    const selectionEnd2 = selectionStart2 + revealed2.length;
+
     const secretResps = [
       bodyString.substring(0, selectionStart),
-      bodyString.substring(selectionEnd, bodyString.length),
+      bodyString.substring(selectionEnd, selectionStart2),
+      bodyString.substring(selectionEnd2, bodyString.length),
     ];
+
+    console.log(secretResps[0]);
+    console.log(secretResps[1]);
+    console.log(secretResps[2]);
 
     outputJSON(secretResps);
   } else {
@@ -154,7 +166,7 @@ export function three() {
   } else {
     const id = notarize({
       ...params,
-      // getSecretResponse: 'parseTwitterResp',
+      getSecretResponse: 'parseTwitterResp',
     });
     outputJSON(id);
   }

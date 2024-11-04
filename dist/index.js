@@ -125,7 +125,7 @@ var import_hf = __toESM(require_hf());
 var requestUrl = "https://x.com/i/api/graphql/BQ6xjFU6Mgm-WhEP3OiT9w/UserByScreenName";
 var createFullRequestUrl = () => {
   const variables = {
-    screen_name: "0xboosik"
+    screen_name: "0xdarron"
   };
   const features = {
     hidden_profile_subscriptions_enabled: true,
@@ -172,7 +172,7 @@ function isValidHost(urlString) {
 }
 function start() {
   if (!isValidHost(Config.get("tabUrl"))) {
-    (0, import_hf.redirect)("https://x.com/0xboosik");
+    (0, import_hf.redirect)("https://x.com/0xdarron");
     (0, import_hf.outputJSON)(false);
     return;
   }
@@ -209,6 +209,7 @@ function two() {
 function parseTwitterResp() {
   const bodyString = Host.inputString();
   const params = JSON.parse(bodyString);
+  console.log(params);
   if (params.data && params.data.user && params.data.user.result) {
     const userResult = params.data.user.result;
     const followedBy = userResult.legacy.followed_by !== void 0 ? userResult.legacy.followed_by : null;
@@ -216,10 +217,18 @@ function parseTwitterResp() {
     const revealed = `"followed_by":${followedBy},"following":${following}`;
     const selectionStart = bodyString.indexOf(revealed);
     const selectionEnd = selectionStart + revealed.length;
+    const screenName = params.data.user.result.legacy.screen_name;
+    const revealed2 = `"screen_name":"${screenName}"`;
+    const selectionStart2 = bodyString.indexOf(revealed2);
+    const selectionEnd2 = selectionStart2 + revealed2.length;
     const secretResps = [
       bodyString.substring(0, selectionStart),
-      bodyString.substring(selectionEnd, bodyString.length)
+      bodyString.substring(selectionEnd, selectionStart2),
+      bodyString.substring(selectionEnd2, bodyString.length)
     ];
+    console.log(secretResps[0]);
+    console.log(secretResps[1]);
+    console.log(secretResps[2]);
     (0, import_hf.outputJSON)(secretResps);
   } else {
     (0, import_hf.outputJSON)(false);
@@ -231,8 +240,8 @@ function three() {
     (0, import_hf.outputJSON)(false);
   } else {
     const id = (0, import_hf.notarize)({
-      ...params
-      // getSecretResponse: 'parseTwitterResp',
+      ...params,
+      getSecretResponse: "parseTwitterResp"
     });
     (0, import_hf.outputJSON)(id);
   }
